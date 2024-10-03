@@ -16,6 +16,7 @@ struct reservation {
 struct reservation reservations[1000];
 int nb_reservation = 0;
 char id_table[10000][8];
+int id = 121000;
 int conteur_id = 0;
 int i,d,choix,revenu,verifi;
 
@@ -29,8 +30,7 @@ char *generer_id() {
     char *idi = malloc(8);
     int i;
     authre:
-    srand(time(NULL));
-    int num = rand() % 900000 + 100000; 
+    id = id + 1; 
     sprintf(idi, "YC%06d", num);
     for (i = 0; i <= conteur_id;i++){
         if (!strcmp(id_table[conteur_id], idi)){
@@ -71,4 +71,27 @@ int numero_valide(const char *numero) {
         if (strcmp(contacts[i].numero, numero) == 0 ) {
             printf("%sle numero existe deja :%s\n",rouge,reset);
             return 0;} }
+    return 1;}
+
+// la fonction qui verifier l'age
+int age_valide(int age) {
+    if (age >= 0 && age <= 120){
+        return 1;}
+    else{
+        printf("%sce l\'age n\'est pas valide . %s\n",rouge,reset);
+        return 0;} 
+}
+
+// la fonction qui verifier la date de reservation
+int date_valide(int jour, int mois, int annee) {
+    int jours[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (annee % 4 ==0) {
+        jours[1]=29;}
+
+    if (mois < 1 || mois > 12) {
+        return 0;}
+
+    if (jour < 1 || jour > jours[mois - 1]) {
+        return 0;}
+
     return 1;}
